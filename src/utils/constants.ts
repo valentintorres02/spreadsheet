@@ -1,0 +1,6 @@
+export const CELLS_AMOUNT = 480;
+export const COLUMNS_AMOUNT = 12;
+
+export const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+export const COLUMN_LABELS = ALPHABET.substring(0, COLUMNS_AMOUNT);
