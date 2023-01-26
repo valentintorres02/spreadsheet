@@ -6,7 +6,7 @@ const Columns = () => {
   return (
     <div className="grid grid-cols-12">
       {Array.from({ length: COLUMNS_AMOUNT }).map((_cell, index) => {
-        return <Cell key={index} value={COLUMN_LABELS[index - 1]} isAxis />;
+        return <Cell cellId="axis" key={index} value={COLUMN_LABELS[index - 1]} isAxis />;
       })}
     </div>
   );
