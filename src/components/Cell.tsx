@@ -1,17 +1,20 @@
 import classNames from "classnames";
-import { useState } from "react";
+import { useSpreadsheet } from "../context/Spreadsheet.context";
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   active?: boolean;
   isAxis?: boolean;
   value?: string;
+  cellId?: string;
 }
 
-const Cell = ({ active = false, value, isAxis = false, ...props }: Props) => {
-  const [cellValue, setCellValue] = useState(value);
+const Cell = ({ active = false, value, isAxis = false, cellId, ...props }: Props) => {
+  const { cells, updateCellValue } = useSpreadsheet();
 
   function handleCellChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setCellValue(e.target.value);
+    if (cellId) {
+      updateCellValue(cellId, e.target.value);
+    }
   }
 
   return (
@@ -20,7 +23,7 @@ const Cell = ({ active = false, value, isAxis = false, ...props }: Props) => {
         "bg-gray-300 cursor-default focus:outline-none text-center font-semibold": isAxis,
       })}
       disabled={isAxis}
-      value={cellValue}
+      value={cells[cellId ?? ""] || value || ""}
       onChange={handleCellChange}
       {...props}
     ></input>

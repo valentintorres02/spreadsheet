@@ -1,9 +1,12 @@
-import React from "react";
-import "./App.css";
 import Spreadsheet from "./components/Spreadsheet";
+import { SpreadsheetProvider } from "./context/Spreadsheet.context";
 
 function App() {
-  return <Spreadsheet />;
+  return (
+    <SpreadsheetProvider>
+      <Spreadsheet />
+    </SpreadsheetProvider>
+  );
 }
 
 export default App;

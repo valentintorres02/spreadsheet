@@ -1,22 +1,17 @@
-import { useEffect, useState } from "react";
-import { createCells } from "../utils/cells";
+import { useSpreadsheet } from "../context/Spreadsheet.context";
 import Columns from "./Columns";
 import Row from "./Row";
 
 function Spreadsheet() {
-  const [cells, setCells] = useState<string[][]>([]);
-
-  useEffect(() => {
-    setCells(createCells());
-  }, []);
+  const { rows } = useSpreadsheet();
 
   return (
-    <div>
+    <>
       <Columns />
-      {cells.map((rowCells, index) => (
-        <Row rowNumber={index + 1} cells={rowCells} />
+      {rows.map((rowCells, index) => (
+        <Row key={index} rowNumber={index + 1} cells={rowCells} />
       ))}
-    </div>
+    </>
   );
 }
 
