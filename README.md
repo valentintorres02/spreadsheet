@@ -1,6 +1,10 @@
 # React Spreadsheet
 
-Microsoft Excel-like basic web spreadsheet. Supports most of math operations.
+Microsoft Excel-like basic web spreadsheet. Supports most of math operations and cells referencing.
+
+# Example usage
+
+![example_image](https://www.upload.ee/image/14874062/chrome-capture-2023-0-27.gif "Example image")
 
 ## Getting Started
 

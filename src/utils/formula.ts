@@ -5,8 +5,6 @@ export function isFormula(input: string) {
   return input[0] === "=";
 }
 
-export const CELL_REGEX = new RegExp("^[A-K]+[0-9]?[0-9]");
-
 function splitMulti(str: string, tokens: string[]) {
   const tempChar = tokens[0]; // We can use the first token as a temporary join character
   for (let i = 1; i < tokens.length; i++) {
