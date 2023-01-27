@@ -1,29 +1,68 @@
 import classNames from "classnames";
-import { useState } from "react";
-
+import { useEffect, useRef } from "react";
+import { useSpreadsheet } from "../context/Spreadsheet.context";
+import { getFormulaValue, isFormula } from "../utils/formula";
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  active?: boolean;
   isAxis?: boolean;
   value?: string;
+  cellId: string;
 }
 
-const Cell = ({ active = false, value, isAxis = false, ...props }: Props) => {
-  const [cellValue, setCellValue] = useState(value);
+const Cell = ({ value, isAxis = false, cellId, ...props }: Props) => {
+  const { cells, updateCellValue, activeCell, setActiveCell } = useSpreadsheet();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function handleCellChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setCellValue(e.target.value);
+    updateCellValue(cellId, e.target.value);
   }
 
+  function removeFocusFromInput() {
+    inputRef?.current?.blur();
+  }
+
+  function focusInput() {
+    inputRef?.current?.focus();
+  }
+
+  function handleCellSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const cellValue = cells[cellId] || "";
+
+    if (isFormula(cellValue)) {
+      const formulaValue = getFormulaValue(cellValue, cells);
+      updateCellValue(cellId, formulaValue);
+    }
+
+    removeFocusFromInput();
+  }
+
+  useEffect(() => {
+    if (activeCell === cellId) {
+      focusInput();
+    }
+  }, [activeCell]);
+
   return (
-    <input
-      className={classNames("border border-gray-500/30 h-8 px-1", {
-        "bg-gray-300 cursor-default focus:outline-none text-center font-semibold": isAxis,
+    <form
+      className={classNames("w-full border border-gray-500/30 h-8", {
+        "bg-gray-300 cursor-default focus:outline-none font-semibold": isAxis,
       })}
-      disabled={isAxis}
-      value={cellValue}
-      onChange={handleCellChange}
-      {...props}
-    ></input>
+      onSubmit={handleCellSubmit}
+    >
+      <input
+        className={classNames("w-full h-full px-1", {
+          "text-center": isAxis,
+        })}
+        disabled={isAxis}
+        value={cells[cellId ?? ""] || value || ""}
+        onChange={handleCellChange}
+        type='text'
+        ref={inputRef}
+        onFocus={() => setActiveCell(cellId)}
+        {...props}
+      ></input>
+    </form>
   );
 };
 
