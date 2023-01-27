@@ -2,13 +2,12 @@ import classNames from "classnames";
 import { useSpreadsheet } from "../context/Spreadsheet.context";
 import { getFormulaValue, isFormula } from "../utils/formula";
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  active?: boolean;
   isAxis?: boolean;
   value?: string;
   cellId: string;
 }
 
-const Cell = ({ active = false, value, isAxis = false, cellId, ...props }: Props) => {
+const Cell = ({ value, isAxis = false, cellId, ...props }: Props) => {
   const { cells, updateCellValue } = useSpreadsheet();
 
   function handleCellChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -21,7 +20,7 @@ const Cell = ({ active = false, value, isAxis = false, cellId, ...props }: Props
     const cellValue = cells[cellId] || "";
 
     if (isFormula(cellValue)) {
-      const formulaValue = getFormulaValue(cellValue);
+      const formulaValue = getFormulaValue(cellValue, cells);
       updateCellValue(cellId, formulaValue);
     }
   }
