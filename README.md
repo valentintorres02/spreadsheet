@@ -4,7 +4,7 @@ Microsoft Excel-like basic web spreadsheet. Supports most of math operations and
 
 # Example usage
 
-![example_image](https://www.upload.ee/image/14874062/chrome-capture-2023-0-27.gif "Example image")
+![example_image](https://www.upload.ee/image/14874124/chrome-capture-2023-0-27__1___1_.gif "Example image")
 
 ## Getting Started
 
