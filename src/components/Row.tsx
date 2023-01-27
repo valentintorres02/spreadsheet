@@ -7,8 +7,8 @@ type RowProps = {
 
 const Row = ({ rowNumber, cells }: RowProps) => {
   return (
-    <div className="grid grid-cols-12">
-      <Cell cellId="axis" value={rowNumber.toString()} isAxis />
+    <div className='grid grid-cols-12'>
+      <Cell cellId='axis' value={rowNumber.toString()} isAxis />
       {cells.map((cell) => {
         return <Cell key={cell} cellId={cell} />;
       })}

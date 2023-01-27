@@ -40,7 +40,7 @@ const Cell = ({ active = false, value, isAxis = false, cellId, ...props }: Props
         disabled={isAxis}
         value={cells[cellId ?? ""] || value || ""}
         onChange={handleCellChange}
-        type="text"
+        type='text'
         {...props}
       ></input>
     </form>
