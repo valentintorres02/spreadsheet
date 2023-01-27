@@ -1,4 +1,5 @@
 import classNames from "classnames";
+import { useRef } from "react";
 import { useSpreadsheet } from "../context/Spreadsheet.context";
 import { getFormulaValue, isFormula } from "../utils/formula";
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -9,9 +10,14 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Cell = ({ value, isAxis = false, cellId, ...props }: Props) => {
   const { cells, updateCellValue } = useSpreadsheet();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   function handleCellChange(e: React.ChangeEvent<HTMLInputElement>) {
     updateCellValue(cellId, e.target.value);
+  }
+
+  function removeFocusFromInput() {
+    inputRef?.current?.blur();
   }
 
   function handleCellSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -23,6 +29,8 @@ const Cell = ({ value, isAxis = false, cellId, ...props }: Props) => {
       const formulaValue = getFormulaValue(cellValue, cells);
       updateCellValue(cellId, formulaValue);
     }
+
+    removeFocusFromInput();
   }
 
   return (
@@ -40,6 +48,7 @@ const Cell = ({ value, isAxis = false, cellId, ...props }: Props) => {
         value={cells[cellId ?? ""] || value || ""}
         onChange={handleCellChange}
         type='text'
+        ref={inputRef}
         {...props}
       ></input>
     </form>
