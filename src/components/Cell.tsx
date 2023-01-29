@@ -2,13 +2,13 @@ import classNames from "classnames";
 import { useEffect, useRef } from "react";
 import { useSpreadsheet } from "../context/Spreadsheet.context";
 import { getFormulaValue, isFormula } from "../utils/formula";
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface CellProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isAxis?: boolean;
   value?: string;
   cellId: string;
 }
 
-const Cell = ({ value, isAxis = false, cellId, ...props }: Props) => {
+const Cell = ({ value, isAxis = false, cellId, ...props }: CellProps) => {
   const { cells, updateCellValue, activeCell, setActiveCell } = useSpreadsheet();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,6 +49,7 @@ const Cell = ({ value, isAxis = false, cellId, ...props }: Props) => {
         "bg-gray-300 cursor-default focus:outline-none font-semibold": isAxis,
       })}
       onSubmit={handleCellSubmit}
+      data-testid='cell-form'
     >
       <input
         className={classNames("w-full h-full px-1", {
@@ -60,6 +61,7 @@ const Cell = ({ value, isAxis = false, cellId, ...props }: Props) => {
         type='text'
         ref={inputRef}
         onFocus={() => setActiveCell(cellId)}
+        data-testid='cell-input'
         {...props}
       ></input>
     </form>
