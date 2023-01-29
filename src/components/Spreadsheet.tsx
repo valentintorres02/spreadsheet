@@ -10,9 +10,11 @@ function Spreadsheet() {
   return (
     <>
       <Columns />
-      {rows.map((rowCells, index) => (
-        <Row key={index} rowNumber={index + 1} cells={rowCells} />
-      ))}
+      <div data-testid='rows-container'>
+        {rows.map((rowCells, index) => (
+          <Row key={index} rowNumber={index + 1} cells={rowCells} />
+        ))}
+      </div>
     </>
   );
 }
