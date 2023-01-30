@@ -1,6 +1,7 @@
 # React Spreadsheet
 
 Microsoft Excel-like basic web spreadsheet. Supports most of math operations and cells referencing.
+Live demo can be found [here.](https://spreadsheet-zeta.vercel.app/)
 
 # Example usage
 
